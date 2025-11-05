@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Buyurtma tafsilotlari{% endblock %}
+{% block content %}
+<h2>Buyurtma tafsilotlari</h2>
+
+<a href="{% url 'add_orderdetails' %}" class="btn btn-primary mb-3">Tafsilot qo‘shish</a>
+
+<table class="table table-bordered text-center">
+    <thead class="table-dark">
+        <tr>
+            <th>#</th>
+            <th>Buyurtma</th>
+            <th>Mahsulot</th>
+            <th>Narxi</th>
+            <th>Soni</th>
+            <th>Chegirma (%)</th>
+            <th>Amallar</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for o in orderdetails %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ o.order }}</td>
+            <td>{{ o.product }}</td>
+            <td>{{ o.unit_price }}</td>
+            <td>{{ o.quantity }}</td>
+            <td>{{ o.discounted }}</td>
+            <td>
+                <a href="{% url 'update_orderdetails' o.id %}" class="btn btn-warning btn-sm">Tahrirlash</a>
+                <a href="{% url 'delete_orderdetails' o.id %}" class="btn btn-danger btn-sm"
+                   onclick="return confirm('Rostdan o‘chirmoqchimisiz');">O‘chirish</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="7">Tafsilotlar mavjud emas</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
